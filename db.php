@@ -1,0 +1,17 @@
+<?php
+// Change these four values only if your XAMPP MySQL setup is different.
+$host = 'localhost';
+$database = 'rr saree';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$database;charset=utf8mb4",
+        $username,
+        $password,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (PDOException $error) {
+    exit('Database connection failed: ' . $error->getMessage());
+}
