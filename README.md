@@ -14,7 +14,7 @@ catalogue2.php > (db.php, style.css)
 to run project with database integration, set these sets of files as follows: 
 1. go to : this pc > windows(c:) > xampp > htdocs 
 2. there you create a folder named rr-saree (copy paste the rr saree exactly) 
-3.in C:\xampp\htdocs\rr-saree\WAD Assignment Y2 SEM 1 you paste all files in the repository to that destination
+3. in C:\xampp\htdocs\rr-saree\WAD Assignment Y2 SEM 1 you paste all files in the repository to that destination
 4. if yall do not have wad assignment folder, create a new one with the name: (  WAD Assignment Y2 SEM 1  )
 5. import the sql file on the repository on xampp
 6. after all the steps: yall can run the project on browser: http://localhost/rr-saree/WAD%20Assignment%20Y2%20SEM%201/
