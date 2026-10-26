@@ -55,15 +55,15 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Catalogue | RR Sarees</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cataloguestyle.css">
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="catalogue.php">RR Sarees</a>
+        <a class="brand" href="index.html">RR Sarees</a>
         <nav>
-            <a href="index.php">Home</a>
-            <a class="active" href="catalogue.php">Catalogue</a>
-            <a href="account.php">Account</a>
+            <a href="index.html">Home</a>
+            <a class="active" href="catalogue2.php">Catalogue</a>
+            <a href="login.html">Account</a>
         </nav>
         <button class="cart" type="button" aria-label="Shopping cart">Cart <span id="cart-count">0</span></button>
     </header>
@@ -71,7 +71,7 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
     <main class="page-layout">
         <aside class="filters">
             <h1>Filters</h1>
-            <form method="get" action="catalogue.php">
+            <form method="get" action="catalogue2.php">
                 <label for="search">Search</label>
                 <input id="search" name="search" value="<?= htmlspecialchars($search) ?>" placeholder="Search sarees">
 
@@ -104,7 +104,7 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </fieldset>
                 <button class="apply" type="submit">Apply filters</button>
-                <a class="clear" href="catalogue.php">Clear filters</a>
+                <a class="clear" href="catalogue2.php">Clear filters</a>
             </form>
         </aside>
 
