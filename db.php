@@ -1,7 +1,7 @@
 <?php
 // Change these four values only if your XAMPP MySQL setup is different.
 $host = 'localhost';
-$database = 'rr saree';
+$database = 'rr_saree';
 $username = 'root';
 $password = '';
 
