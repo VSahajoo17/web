@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2026 at 03:10 PM
+-- Generation Time: Oct 21, 2026 at 11:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,8 +18,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rr saree`
+-- Database: `rr_saree`
 --
+
+CREATE DATABASE IF NOT EXISTS `rr_saree` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `rr_saree`;
 
 -- --------------------------------------------------------
 
@@ -38,15 +41,7 @@ CREATE TABLE `itemlocate` (
 --
 
 INSERT INTO `itemlocate` (`itemid`, `locationid`, `stock`) VALUES
-(1, 1, 2),
-(2, 1, 5),
-(3, 4, 10),
-(4, 3, 10),
-(5, 1, 10),
-(6, 1, 10),
-(7, 1, 10),
-(8, 1, 10),
-(9, 1, 10);
+(1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -67,15 +62,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `itemname`, `price`, `imgurl`, `category`) VALUES
-(1, 'Red Saree', 700.00, 'assets\\pic1.jpg', 'women'),
-(2, 'Turquoise Saree', 900.00, 'assets\\pic2.jpg', 'women'),
-(3, 'Seelam Silk saree', 1500.00, 'assets\\pic3.jpg', 'women'),
-(4, 'white saree', 1100.00, 'assets\\pic4.jpg', 'women'),
-(5, 'light blue saree', 1200.00, 'assets\\pic5.jpg', 'women'),
-(6, 'blue saree', 1500.00, 'assets\\pic6.jpg', 'women'),
-(7, 'white saree with blue border', 1600.00, 'assets\\pic7.jpg', 'women'),
-(8, 'red silk saree', 1900.00, 'assets\\pic8.jpg', 'women'),
-(9, 'white saree with red border', 1900.00, 'assets\\pic9.jpg', 'women');
+(1, 'pic1', 500.00, 'assets/pic1.jpg', 'women');
 
 -- --------------------------------------------------------
 
@@ -94,7 +81,7 @@ CREATE TABLE `locations` (
 --
 
 INSERT INTO `locations` (`id`, `location`, `maplink`) VALUES
-(1, 'palma', 'https://maps.google.com/?q=-20.274221,57.468132'),
+(1, 'Palma', 'https://maps.google.com/?q=-20.274221,57.468132'),
 (2, 'Rose Hill', 'https://maps.google.com/?q=-20.242224,57.471416'),
 (3, 'Beau Bassin', 'https://maps.google.com/?q=-20.215302,57.469524'),
 (4, 'Berthaud', 'https://maps.google.com/?q=-20.268894,57.470066');
@@ -107,7 +94,7 @@ INSERT INTO `locations` (`id`, `location`, `maplink`) VALUES
 -- Indexes for table `itemlocate`
 --
 ALTER TABLE `itemlocate`
-  ADD KEY `itemid` (`itemid`),
+  ADD PRIMARY KEY (`itemid`,`locationid`),
   ADD KEY `locationid` (`locationid`);
 
 --
@@ -130,7 +117,7 @@ ALTER TABLE `locations`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `locations`
@@ -149,6 +136,10 @@ ALTER TABLE `itemlocate`
   ADD CONSTRAINT `foreignkey` FOREIGN KEY (`itemid`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `foreignkey2` FOREIGN KEY (`locationid`) REFERENCES `locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
