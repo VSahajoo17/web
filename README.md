@@ -18,3 +18,4 @@ to run project with database integration, set these sets of files as follows:
 4. if yall do not have wad assignment folder, create a new one with the name: (  WAD Assignment Y2 SEM 1  )
 5. import the sql file on the repository on xampp
 6. after all the steps: yall can run the project on browser: http://localhost/rr-saree/WAD%20Assignment%20Y2%20SEM%201/
+k.harsh localhost link : http://localhost/rr-saree/index.html
