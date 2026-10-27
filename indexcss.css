@@ -212,3 +212,9 @@ p{
     position:relative;
     right:-100px;
 }
+
+/* keep slideshow buttons above the banner so they receive clicks */
+#slide-buttons{
+    position:relative;
+    z-index:10;
+}
