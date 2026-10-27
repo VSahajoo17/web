@@ -2,8 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <a href="index.html" class="back-home">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Home
+        </a>
     <title>R.R Sarees - Store Locator</title>
+
     <style>
+
+        .back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background-color: #ab0000;
+    color: white;
+
+    padding: 8px 14px;
+    border-radius: 8px;
+
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
         /* Page Body Styling */
         body {
             font-family: Arial, sans-serif; /* Sets clean text font */
@@ -12,15 +35,25 @@
             margin-left: 40px;    /* Space to the left of the content */
             margin-right: 40px;   /* Space to the right of the content */
             color: #333;          /* Dark gray text color */
+            background: radial-gradient(#fff, #ffc66b)
         }
 
         /* Main Heading Styling */
         h1 {
-            border-bottom-width: 2px;  /* Thickness of line under title */
-            border-bottom-style: solid;/* Solid line style */
-            border-bottom-color: #ddd;  /* Light gray line color */
-            padding-bottom: 10px;      /* Space between title text and line */
-        }
+    display: inline-block;
+    background: radial-gradient(#ce5555 , #d70000);
+    color: white;
+    padding: 18px 35px;
+    border-radius: 12px;
+    border: 3px solid #ffc66b;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    font-size: 38px;
+    letter-spacing: 5px;
+}
+
+.heading-container{
+    text-align:center;
+}
 
         /* Unordered List Container */
         .store-list {
@@ -44,12 +77,85 @@
             color: #0066cc;        /* Blue color for clickable links */
             text-decoration: none; /* Removes underline from links */
         }
+        .store-list li{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin:20px 0;
+}
+
+.location-img1{
+    width:400px;
+    height:320px;
+    object-fit:cover;
+    border-radius:8px;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    margin-left : 100px;
+}
+
+.location-img2{
+    width:400px;
+    height:320px;
+    object-fit:cover;
+    border-radius:8px;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    margin-left : 77px;
+}
+
+.location-img3{
+    width:400px;
+    height:320px;
+    object-fit:cover;
+    border-radius:8px;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    margin-left : 47px;
+}
+
+.location-img4{
+    width:400px;
+    height:320px;
+    object-fit:cover;
+    border-radius:8px;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    margin-left : 75px;
+}
+
+.location-img1:hover{
+    transform:scale(2);
+    
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.location-img2:hover{
+    transform:scale(2);
+    
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.location-img3:hover{
+    transform:scale(2);
+    
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.location-img4:hover{
+    transform:scale(2);
+    
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
     </style>
 </head>
 <body>
 
     <!-- Main Title -->
+    <div class="heading-container">
     <h1>R.R Sarees Store Locator</h1>
+</div>
     
     <!-- Instruction Text -->
     <p>Click on any location below to view it on Google Maps:</p>
@@ -57,16 +163,24 @@
     <!-- List of Store Locations -->
     <ul class="store-list">
         <!-- Palma Store Link -->
-        <li><a href="https://maps.google.com/?q=-20.274221,57.468132" target="_blank">Palma</a></li>
+        <li><a href="https://maps.google.com/?q=-20.274221,57.468132" target="_blank">Palma</a>
+            <img src="assets/loc-palma.png" class="location-img1" alt="Palma Store">
+        </li>
         
         <!-- Rose Hill Store Link -->
-        <li><a href="https://maps.google.com/?q=-20.242224,57.471416" target="_blank">Rose Hill</a></li>
+        <li><a href="https://maps.google.com/?q=-20.242224,57.471416" target="_blank">Rose Hill</a>
+            <img src="assets/loc-rh.png" class="location-img2" alt="Rose hill Store">
+        </li>
         
         <!-- Beau Bassin Store Link -->
-        <li><a href="https://maps.google.com/?q=-20.215302,57.469524" target="_blank">Beau Bassin</a></li>
+        <li><a href="https://maps.google.com/?q=-20.215302,57.469524" target="_blank">Beau Bassin</a>
+            <img src="assets/loc-beaubassin.png" class="location-img3" alt="Beau Bassin Store">
+        </li>
         
         <!-- Berthaud Store Link -->
-        <li><a href="https://maps.google.com/?q=-20.268894,57.470066" target="_blank">Berthaud</a></li>
+        <li><a href="https://maps.google.com/?q=-20.268894,57.470066" target="_blank">Berthaud</a>
+            <img src="assets/loc-berthaud.png" class="location-img4" alt="Berthaud Store">
+        </li>
     </ul>
 
 </body>
