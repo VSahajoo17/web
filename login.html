@@ -222,6 +222,8 @@
             <p>Elegance in Every Weave</p>
         </div>
 
+        <p id="form-message" role="status" aria-live="polite"></p>
+
         <div class="tabs">
             <button id="tab-login" class="tab-btn active" onclick="switchTab('login')">Login</button>
             <button id="tab-register" class="tab-btn" onclick="switchTab('register')">Register</button>
@@ -229,15 +231,16 @@
 
         <!-- Login Form -->
         <div id="login-panel" class="form-panel active">
-            <form action="#" method="POST" onsubmit="handleSubmit(event, 'Login')">
+            <form action="auth.php" method="POST">
+                <input type="hidden" name="action" value="login">
                 <div class="input-group">
-                    <label for="login-email">Email or Mobile Number</label>
-                    <input type="text" id="login-email" required placeholder="Enter your email or phone">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" name="email" required autocomplete="email" placeholder="name@example.com">
                 </div>
                 
                 <div class="input-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" required placeholder="Enter your password">
+                    <input type="password" id="login-password" name="password" required autocomplete="current-password" placeholder="Enter your password">
                 </div>
 
                 <div class="forgot-pass">
@@ -253,25 +256,31 @@
 
         <!-- Registration Form -->
         <div id="register-panel" class="form-panel">
-            <form action="#" method="POST" onsubmit="handleSubmit(event, 'Registration')">
+            <form action="auth.php" method="POST">
+                <input type="hidden" name="action" value="register">
                 <div class="input-group">
-                    <label for="reg-name">Full Name</label>
-                    <input type="text" id="reg-name" required placeholder="Your full name">
+                    <label for="reg-firstname">First Name</label>
+                    <input type="text" id="reg-firstname" name="firstname" required autocomplete="given-name" placeholder="Your first name">
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-lastname">Last Name</label>
+                    <input type="text" id="reg-lastname" name="lastname" required autocomplete="family-name" placeholder="Your last name">
                 </div>
 
                 <div class="input-group">
                     <label for="reg-email">Email Address</label>
-                    <input type="email" id="reg-email" required placeholder="name@example.com">
+                    <input type="email" id="reg-email" name="email" required autocomplete="email" placeholder="name@example.com">
                 </div>
 
                 <div class="input-group">
                     <label for="reg-phone">Mobile Number</label>
-                    <input type="tel" id="reg-phone" required placeholder="10-digit mobile number">
+                    <input type="tel" id="reg-phone" name="phone_num" required autocomplete="tel" placeholder="Your mobile number">
                 </div>
 
                 <div class="input-group">
                     <label for="reg-password">Password</label>
-                    <input type="password" id="reg-password" required placeholder="Create a strong password">
+                    <input type="password" id="reg-password" name="password" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters">
                 </div>
 
                 <button type="submit" class="btn-submit">Create Account</button>
@@ -299,9 +308,20 @@
             }
         }
 
-        function handleSubmit(event, type) {
-            event.preventDefault();
-            alert(type + ' form submitted! Connect this to your backend system.');
+        const statusMessages = {
+            registered: 'Account created. You can now sign in.',
+            invalid_input: 'Check the details you entered and try again.',
+            email_exists: 'That email address is already registered.',
+            login_failed: 'Invalid email or password.',
+            server_error: 'Something went wrong. Please try again.'
+        };
+        const params = new URLSearchParams(window.location.search);
+        const message = statusMessages[params.get('status')];
+        if (message) {
+            document.getElementById('form-message').textContent = message;
+        }
+        if (params.get('form') === 'register') {
+            switchTab('register');
         }
     </script>
 </body>
