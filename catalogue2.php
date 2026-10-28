@@ -8,7 +8,7 @@ $cartCount = array_sum($cart);
 // Read filters from the address bar. Empty values mean "show all".
 $locationId = filter_input(INPUT_GET, 'location', FILTER_VALIDATE_INT) ?: '';
 $category = $_GET['category'] ?? '';
-$search = trim($_GET['search'] ?? '');
+$search = trim(strtolower($_GET['search'] ?? ''));
 $minPrice = filter_input(INPUT_GET, 'min_price', FILTER_VALIDATE_FLOAT);
 $maxPrice = filter_input(INPUT_GET, 'max_price', FILTER_VALIDATE_FLOAT);
 $allowedCategories = ['women', 'men', 'accessories'];
