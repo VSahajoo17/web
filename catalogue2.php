@@ -1,5 +1,9 @@
 <?php
+session_start();
 require 'db.php';
+
+$cart = $_SESSION['cart'] ?? [];
+$cartCount = array_sum($cart);
 
 // Read filters from the address bar. Empty values mean "show all".
 $locationId = filter_input(INPUT_GET, 'location', FILTER_VALIDATE_INT) ?: '';
@@ -65,7 +69,7 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
             <a class="active" href="catalogue2.php">Catalogue</a>
             <a href="login.html">Account</a>
         </nav>
-        <button class="cart" type="button" aria-label="Shopping cart">Cart <span id="cart-count">0</span></button>
+        <a class="cart" href="cart.php" aria-label="Shopping cart">Cart <span id="cart-count"><?= $cartCount ?></span></a>
     </header>
 
     <main class="page-layout">
@@ -121,7 +125,11 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
                             <p class="category"><?= htmlspecialchars(ucfirst($item['category'])) ?></p>
                             <h3><?= htmlspecialchars($item['itemname']) ?></h3>
                             <p class="price">Rs <?= number_format((float) $item['price'], 2) ?></p>
-                            <button class="add-cart" type="button" data-name="<?= htmlspecialchars($item['itemname']) ?>">Add to cart</button>
+                            <form method="post" action="cart.php">
+                                <input type="hidden" name="action" value="add">
+                                <input type="hidden" name="item_id" value="<?= (int) $item['id'] ?>">
+                                <button class="add-cart" type="submit">Add to cart</button>
+                            </form>
                         </div>
                     </article>
                 <?php endforeach; ?>
@@ -131,16 +139,5 @@ $items = $statement->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
         </section>
     </main>
-    <script>
-        let cartCount = 0;
-        document.querySelectorAll('.add-cart').forEach(button => {
-            button.addEventListener('click', () => {
-                cartCount++;
-                document.getElementById('cart-count').textContent = cartCount;
-                button.textContent = 'Added';
-                button.disabled = true;
-            });
-        });
-    </script>
 </body>
 </html>
