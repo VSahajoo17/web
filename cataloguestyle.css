@@ -1,4 +1,4 @@
-:root { --wine: #652d35; --cream: #fffaf5; --ink: #2b2020; --gold: #b48144; }
+:root { --wine: #652d35; --cream: radial-gradient(#fff, #ffc66b); --ink: #2b2020; --gold: #b48144; }
 * { box-sizing: border-box; }
 body { margin: 0; color: var(--ink); background: var(--cream); font-family: Arial, sans-serif; }
 .topbar { min-height: 70px; display: flex; align-items: center; gap: 32px; padding: 12px 5%; background: white; border-bottom: 1px solid #eaded5; }
