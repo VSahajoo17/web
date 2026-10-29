@@ -135,6 +135,18 @@ INSERT INTO `login_info` (`userid`, `firstname`, `lastname`, `password`, `email`
 (1, 'John', 'Doe', 'hashed_password', 'john.doe@example.com', '1234567890');
 
 --
+-- Table structure for table `remember_tokens`
+--
+
+CREATE TABLE `remember_tokens` (
+  `id` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `token_hash` char(64) NOT NULL,
+  `expires_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+--
 -- Indexes for dumped tables
 --
 
@@ -165,6 +177,13 @@ ALTER TABLE `login_info`
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `phone_num` (`phone_num`);
 
+
+ALTER TABLE `remember_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token_hash` (`token_hash`),
+  ADD KEY `userid` (`userid`),
+  ADD KEY `expires_at` (`expires_at`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -188,6 +207,12 @@ ALTER TABLE `login_info`
   MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `remember_tokens`
+--
+ALTER TABLE `remember_tokens`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -197,6 +222,9 @@ ALTER TABLE `login_info`
 ALTER TABLE `itemlocate`
   ADD CONSTRAINT `foreignkey` FOREIGN KEY (`itemid`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `foreignkey2` FOREIGN KEY (`locationid`) REFERENCES `locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `remember_tokens`
+  ADD CONSTRAINT `remember_tokens_user_fk` FOREIGN KEY (`userid`) REFERENCES `login_info` (`userid`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
