@@ -25,3 +25,32 @@ fieldset { margin: 20px 0; padding: 0; border: 0; } .check-label { font-weight: 
 .remove-cart { cursor: pointer; border: 1px solid var(--wine); border-radius: 4px; background: white; color: var(--wine); padding: 9px 13px; font-weight: bold; }
 @media (max-width: 520px) { .cart-item { align-items: flex-start; flex-wrap: wrap; }.cart-item img { width: 80px; height: 100px; }.cart-item form { width: 100%; }.remove-cart { width: 100%; } }
 @media (max-width: 720px) { .topbar { gap: 12px; flex-wrap: wrap; }.page-layout { grid-template-columns: 1fr; }.filters { order: 2; } }
+
+.cart-actions{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.return-btn,
+.checkout-btn{
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.return-btn{
+    background:white;
+    color:#652d35;
+    border:1px solid #652d35;
+}
+
+.checkout-btn{
+    background:#652d35;
+    color:white;
+}
+
+.checkout-btn:hover{
+    background:#4d2027;
+}

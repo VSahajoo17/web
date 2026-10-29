@@ -106,7 +106,17 @@ $cartCount = array_sum($cart);
                         </form>
                     </article>
                 <?php endforeach; ?>
-                <h2><a href="catalogue2.php">Return to the catalogue?</a></h2>
+                <div class="cart-actions">
+    <a class="return-btn" href="catalogue2.php">
+        Return to Catalogue
+    </a>
+
+    <?php if (isset($_SESSION['userid'])): ?>
+        <a class="checkout-btn" href="payment.php">
+            Proceed to Payment
+        </a>
+    <?php endif; ?>
+</div>
             </div>
         <?php endif; ?>
     </main>
