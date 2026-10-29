@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/persistent_auth.php';
 
 if (!isset($_SESSION['userid'])) {
     header("Location: login.html");

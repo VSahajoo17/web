@@ -1,6 +1,5 @@
 <?php
-session_start();
-require 'db.php';
+require_once __DIR__ . '/persistent_auth.php';
 
 if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
@@ -73,6 +72,12 @@ $cartCount = array_sum($cart);
             <a href="index.html">Home</a>
             <a href="catalogue2.php">Catalogue</a>
             <a href="login.html">Account</a>
+            <?php if (isset($_SESSION['userid'])): ?>
+                <form method="post" action="logout.php">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+                    <button class="nav-logout" type="submit">Sign out</button>
+                </form>
+            <?php endif; ?>
         </nav>
         <a class="cart" href="cart.php" aria-label="Shopping cart">Cart <span><?= $cartCount ?></span></a>
     </header>
@@ -107,16 +112,13 @@ $cartCount = array_sum($cart);
                     </article>
                 <?php endforeach; ?>
                 <div class="cart-actions">
-    <a class="return-btn" href="catalogue2.php">
-        Return to Catalogue
-    </a>
-
-    <?php if (isset($_SESSION['userid'])): ?>
-        <a class="checkout-btn" href="payment.php">
-            Proceed to Payment
-        </a>
-    <?php endif; ?>
-</div>
+                    <a class="return-btn" href="catalogue2.php">Return to Catalogue</a>
+                    <?php if (isset($_SESSION['userid'])): ?>
+                        <a class="checkout-btn" href="payment.php">Proceed to Payment</a>
+                    <?php else: ?>
+                        <a class="checkout-btn" href="login.html">Sign in to proceed to payment</a>
+                    <?php endif; ?>
+                </div>
             </div>
         <?php endif; ?>
     </main>
