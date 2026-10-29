@@ -153,6 +153,26 @@
             box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.1);
         }
 
+        .availability-message {
+            display: block;
+            min-height: 1.2em;
+            margin-top: 0.35rem;
+            font-size: 0.82rem;
+        }
+
+        .availability-message[data-state="available"] {
+            color: #26733b;
+        }
+
+        .availability-message[data-state="unavailable"],
+        .availability-message[data-state="error"] {
+            color: var(--primary-color);
+        }
+
+        .availability-message[data-state="checking"] {
+            color: #666;
+        }
+
         .forgot-pass {
             text-align: right;
             margin-top: -0.5rem;
@@ -268,12 +288,14 @@
 
                 <div class="input-group">
                     <label for="reg-email">Email Address</label>
-                    <input type="email" id="reg-email" name="email" required autocomplete="email" placeholder="name@example.com">
+                    <input type="email" id="reg-email" name="email" required maxlength="100" autocomplete="email" placeholder="name@example.com">
+                    <span id="reg-email-status" class="availability-message" role="status" aria-live="polite"></span>
                 </div>
 
                 <div class="input-group">
                     <label for="reg-phone">Mobile Number</label>
-                    <input type="tel" id="reg-phone" name="phone_num" required autocomplete="tel" placeholder="Your mobile number">
+                    <input type="tel" id="reg-phone" name="phone_num" required maxlength="20" autocomplete="tel" placeholder="Your mobile number">
+                    <span id="reg-phone-status" class="availability-message" role="status" aria-live="polite"></span>
                 </div>
 
                 <div class="input-group">
@@ -306,10 +328,96 @@
             }
         }
 
+        const registrationChecks = [
+            {
+                field: 'email',
+                input: document.getElementById('reg-email'),
+                status: document.getElementById('reg-email-status')
+            },
+            {
+                field: 'phone',
+                input: document.getElementById('reg-phone'),
+                status: document.getElementById('reg-phone-status')
+            }
+        ];
+        const checkRequestIds = new Map();
+        const debounceTimers = new Map();
+
+        function setAvailabilityMessage(status, state, message) {
+            status.dataset.state = state;
+            status.textContent = message;
+        }
+
+        async function checkAvailability(field, input, status) {
+            const value = input.value.trim();
+            const requestId = (checkRequestIds.get(field) || 0) + 1;
+            checkRequestIds.set(field, requestId);
+
+            if (!value) {
+                input.setCustomValidity('');
+                setAvailabilityMessage(status, '', '');
+                return;
+            }
+
+            if (field === 'email' && input.validity.typeMismatch) {
+                input.setCustomValidity('');
+                setAvailabilityMessage(status, 'error', 'Enter a valid email address.');
+                return;
+            }
+
+            setAvailabilityMessage(status, 'checking', 'Checking availability...');
+
+            try {
+                const response = await fetch('check_registration.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ field, value })
+                });
+                const result = await response.json();
+
+                if (!response.ok || typeof result.available !== 'boolean') {
+                    throw new Error('Availability check failed.');
+                }
+                if (checkRequestIds.get(field) !== requestId || input.value.trim() !== value) {
+                    return;
+                }
+
+                const message = result.available
+                    ? `${field === 'email' ? 'Email' : 'Phone number'} is available.`
+                    : `That ${field === 'email' ? 'email address' : 'phone number'} is already registered.`;
+                input.setCustomValidity(result.available ? '' : message);
+                setAvailabilityMessage(status, result.available ? 'available' : 'unavailable', message);
+            } catch (error) {
+                if (checkRequestIds.get(field) !== requestId) {
+                    return;
+                }
+                input.setCustomValidity('');
+                setAvailabilityMessage(status, 'error', 'Could not check right now. You can still submit and we will verify it.');
+            }
+        }
+
+        registrationChecks.forEach(({ field, input, status }) => {
+            input.addEventListener('input', () => {
+                checkRequestIds.set(field, (checkRequestIds.get(field) || 0) + 1);
+                input.setCustomValidity('');
+                setAvailabilityMessage(status, '', '');
+                clearTimeout(debounceTimers.get(field));
+                debounceTimers.set(field, setTimeout(() => {
+                    checkAvailability(field, input, status);
+                }, 400));
+            });
+
+            input.addEventListener('blur', () => {
+                clearTimeout(debounceTimers.get(field));
+                checkAvailability(field, input, status);
+            });
+        });
+
         const statusMessages = {
             registered: 'Account created. You can now sign in.',
             invalid_input: 'Check the details you entered and try again.',
             email_exists: 'That email address is already registered.',
+            phone_exists: 'That phone number is already registered.',
             login_failed: 'Invalid email or password.',
             server_error: 'Something went wrong. Please try again.'
         };
@@ -318,7 +426,7 @@
         if (message) {
             document.getElementById('form-message').textContent = message;
         }
-        if (params.get('form') === 'register') {
+        if (params.get('form') === 'register' || ['email_exists', 'phone_exists'].includes(params.get('status'))) {
             switchTab('register');
         }
     </script>

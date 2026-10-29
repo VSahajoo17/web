@@ -162,7 +162,8 @@ ALTER TABLE `locations`
 --
 ALTER TABLE `login_info`
   ADD PRIMARY KEY (`userid`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone_num` (`phone_num`);
 
 --
 -- AUTO_INCREMENT for dumped tables

@@ -48,6 +48,24 @@ if ($action === 'register') {
     );
 
     try {
+        $duplicateCheck = $pdo->prepare(
+            'SELECT
+                EXISTS(SELECT 1 FROM login_info WHERE email = :email) AS email_exists,
+                EXISTS(SELECT 1 FROM login_info WHERE phone_num = :phone_num) AS phone_exists'
+        );
+        $duplicateCheck->execute([
+            ':email' => $email,
+            ':phone_num' => trim($phone),
+        ]);
+        $duplicates = $duplicateCheck->fetch(PDO::FETCH_ASSOC);
+
+        if ($duplicates['email_exists']) {
+            redirectToLogin('email_exists', 'register');
+        }
+        if ($duplicates['phone_exists']) {
+            redirectToLogin('phone_exists', 'register');
+        }
+
         $statement->execute([
             ':firstname' => trim($firstname),
             ':lastname' => trim($lastname),
@@ -57,7 +75,17 @@ if ($action === 'register') {
         ]);
     } catch (PDOException $error) {
         if ($error->getCode() === '23000') {
-            redirectToLogin('email_exists', 'register');
+            $duplicateCheck->execute([
+                ':email' => $email,
+                ':phone_num' => trim($phone),
+            ]);
+            $duplicates = $duplicateCheck->fetch(PDO::FETCH_ASSOC);
+            if ($duplicates['email_exists']) {
+                redirectToLogin('email_exists', 'register');
+            }
+            if ($duplicates['phone_exists']) {
+                redirectToLogin('phone_exists', 'register');
+            }
         }
 
         error_log($error->getMessage());
